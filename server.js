@@ -2,22 +2,23 @@ const dotenv = require('dotenv');
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const authRoutes = require('./routes/auth');
-const taskRoutes = require('./routes/task'); // Assuming you have a task route
+const authRoutes = require("./routes/auth");
+const profileRoutes = require("./routes/profile"); 
 
 dotenv.config();
 
 const app = express();
 const port = 5000;
 
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://localhost:5174"], // ✅ dono origins allow
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
 app.use(express.json());
-app.use(express.static("public"));
 app.use('/api/auth', authRoutes);
 app.use('/api/task', taskRoutes); 
 
